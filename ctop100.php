@@ -92,16 +92,19 @@ class rss2json{
 							);
 													
 		
-		$c_list_title = '華語單曲月榜 '.date("Y/m/d"); 
 		global $youtube;
+		$c_list_title = '華語單曲月榜 '.date("Y/m/d"); 
+		$temp = json_decode($_POST['array']);
 
 		if(array_key_exists('plid', $_POST) and $_POST['plid'] !=''){
 			$list_id = $_POST['plid'];
 		}else{
-			$list_id = $youtube->c_play_list($c_list_title);	//Youtube List 作成し、ListIDをReturn.
+			if(is_object($temp)){
+				$list_id = $youtube->c_play_list($c_list_title);	//Youtube List 作成し、ListIDをReturn.
+			}
 		}
 
-		$temp = json_decode($_POST['array']);
+		if($list_id){
 			foreach($temp as $key => $val){
 				$video_id = $youtube->search(urldecode($val));
 				$youtube->c_play_item_insert($list_id,$video_id);  
@@ -109,7 +112,8 @@ class rss2json{
 					$youtube->c_play_item_insert($list_id,$pro_video[array_rand($pro_video)]);  
 				}
 			}
-		}
+		}	
+	}
 
 }
 
