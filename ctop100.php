@@ -52,6 +52,19 @@ echo '</textarea><br>';
 echo '<input type="submit" value="送信">';
 echo '</form>';
 ?>
+
+邦楽新曲ランキング<br>
+https://www.kkbox.com/jp/ja/info/index.html<br><br>
+
+var item = document.getElementsByClassName('song-data');
+var j={};
+for(var i = 0; i <  item.length; i++){
+	var at = item[i].getElementsByTagName('h4')[0].innerText;
+	var ti = item[i].getElementsByTagName('h3')[0].innerText;
+	j[i] = at + ' - ' + ti;
+}
+console.log(JSON.stringify(j));
+
 <?php
 	echo '<pre>';
 	echo $_POST['plid'];
